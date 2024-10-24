@@ -1,29 +1,36 @@
-
-
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+using EmployedProyect.Controllers;
 
 namespace EmployedProyect.Models;
 
 
 public class User
 {
-    public int Id { get; set; }
-    private string _Name { get; set; }
-
-    public string Name
+    public User(string name, string surname, Guid id, Category category) //constructor para HttpGet
     {
-        get { return _Name; }
-        set { _Name = value; }
+        this.Name = name;
+        this.Surname = surname;
+        this.UserId = id;
+        this.UserCategory = category;
     }
-    public string surname { get; set; }
-    private int Identifier { get; set; }
-    public int Dni
+    public User(string name, string surname, Category category) //constructor para HttpPost para que genere el Guid unico por usuario 
     {
-        get { return Identifier; }
-        set { Identifier = value; }
+        this.Name = name;
+        this.Surname = surname;
+        this.UserCategory = category;
+        this.UserId = new Guid();
     }
 
+    public Guid UserId = new Guid();
+    public string Name { get; set; }
+    public string Surname { get; set; }
+    public Category UserCategory {get; set;}
 
+    //User usuario = new User("Lucas", "Pace", new Guid());
+}
 
-
-
+public enum Category
+{
+    Boss,
+    Employee
 }
