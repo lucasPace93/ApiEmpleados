@@ -38,9 +38,9 @@ public class UserController : ControllerBase
 
     [HttpPost]
     [Route("/Employees")]
-    public IActionResult Post([FromBody] User user)
+    public IActionResult Post([FromBody] User usuario)
     {
-        UserService.Save(user);
+        userService.Save(usuario);
         _logger.LogInformation("usuario creado");
         return Created();
     }
@@ -48,7 +48,7 @@ public class UserController : ControllerBase
     [HttpDelete("{UserId}")]
     public IActionResult Delete([FromBody] Guid UserId)
     {
-        UserService.Delete(UserId);
+        userService.Delete(UserId);
         return Ok("usuario eliminado");
     }
 }
