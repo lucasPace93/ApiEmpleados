@@ -12,6 +12,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddSqlServer<UserContext>(builder.Configuration.GetConnectionString("cnUser"));
 //inyeccion de dependencias
 builder.Services.AddScoped<IUserService,UserService>();
 

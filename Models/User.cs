@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using EmployedProyect.Controllers;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace EmployedProyect.Models;
 
 
 public class User
 {
+    //public User(){}
     public User(string name, string surname, Guid id, Category category) //constructor para HttpGet
     {
         this.Name = name;
@@ -24,7 +27,7 @@ public class User
     public Guid UserId = new Guid();
     public string Name { get; set; }
     public string Surname { get; set; }
-    public Category UserCategory {get; set;}
+    public Category UserCategory { get; set; }
 
     //User usuario = new User("Lucas", "Pace", new Guid());
 }

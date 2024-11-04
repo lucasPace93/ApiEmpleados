@@ -1,9 +1,9 @@
+using EmployedProyect.database;
 using EmployedProyect.Models;
 using EmployedProyect.Services;
 using Microsoft.AspNetCore.Http.HttpResults;
-
-//using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployedProyect.Controllers;
 
@@ -13,27 +13,50 @@ namespace EmployedProyect.Controllers;
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
-
     IUserService userService;
-    public UserController(ILogger<UserController> logger, IUserService service)
+    UserContext dbContext;
+
+    User usuario;
+    private List<User> ListaUsuario = new List<User>()
+    {
+        new("Lucas", "Pace", new Guid() , Category.Employee),
+        new("Florencia","Escalante",new Guid(),Category.Employee),
+        new("Lucifer","Pace",new Guid(),Category.Boss),
+        new("Hector","Pace",new Guid(),Category.Employee)
+    };
+    //ListaEmpleado.Add("Lucas", "Pace", Category.Employee);Quotas quotas = new Quotas();Quotas quotas = new Quotas();
+
+    public UserController(ILogger<UserController> logger, IUserService service, UserContext db)
     {
         _logger = logger;
         userService = service;
+        dbContext = db;
     }
 
+    [HttpGet]
+    [Route("create DB")]
+    public IActionResult CreateDatabase()
+    {
+        dbContext.Database.EnsureCreated();
+        return Ok("db successfully created");
+    }
     [HttpGet(Name = "Lista de empleados")]
+    [Route("/Employee")]
     public IActionResult Get()
     {
+        userService.Get();
         _logger.LogInformation("Mostrando lista de empleados");
-        return Ok("lista de empleados en pantalla");
+        return Ok(User);
     }
 
     [HttpGet(Name = "Un Empleado")]
-    [Route("/Employee/{UserId}")]
-    public IActionResult Get(Guid UserId, [FromBody] User user)
+    [Route("/Employee/{Id}")]
+    public IActionResult GetUserById(Guid Id)
     {
+        var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
+        if (Employee == null) return NotFound("Empleado no encontrado");
         _logger.LogInformation("Mostrando usuario solicitado");
-        return Ok($"Empleado {user.Name} {user.Surname} en pantalla");
+        return Ok(Employee);
     }
 
     [HttpPost]
@@ -46,6 +69,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{UserId}")]
+    [Route("Employee/{UserId}")]
     public IActionResult Delete([FromBody] Guid UserId)
     {
         userService.Delete(UserId);

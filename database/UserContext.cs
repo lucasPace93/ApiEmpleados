@@ -16,12 +16,11 @@ public class UserContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-
         List<User> UserInit = new List<User>();
-        UserInit.Add(new User("Lucas", "Pace", Category.Employee));
-        UserInit.Add(new User("Flor", "Escalante", Category.Employee));
-        UserInit.Add(new User("Lucifer", "Pace", Category.Employee));
-        UserInit.Add(new User("Hector", "Pace", Category.Employee));
+        UserInit.Add(new User("Lucas", "Pace",new Guid(), Category.Employee));
+        UserInit.Add(new User("Flor", "Escalante",new Guid(), Category.Employee));
+        UserInit.Add(new User("Lucifer", "Pace", new Guid(), Category.Employee));
+        UserInit.Add(new User("Hector", "Pace", new Guid(), Category.Employee));
 
         modelBuilder.Entity<User>(user =>
         {
@@ -32,11 +31,6 @@ public class UserContext : DbContext
             user.Property(p=> p.Surname).IsRequired();
             user.Property(p =>p.UserCategory).IsRequired();
         });
-
-
-
     }
     #endregion
-
-
 }
