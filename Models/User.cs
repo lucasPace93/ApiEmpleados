@@ -2,6 +2,9 @@ using Microsoft.AspNetCore.Authorization.Infrastructure;
 using EmployedProyect.Controllers;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
+
 
 namespace EmployedProyect.Models;
 
@@ -21,7 +24,7 @@ public class User
         this.Name = name;
         this.Surname = surname;
         this.UserCategory = category;
-        this.UserId = new Guid();
+        this.UserId = Guid.NewGuid();
     }
 
     public Guid UserId = new Guid();
@@ -29,11 +32,13 @@ public class User
     public string Surname { get; set; }
     public Category UserCategory { get; set; }
 
-    //User usuario = new User("Lucas", "Pace", new Guid());
+    
 }
 
 public enum Category
 {
+    [Display(Name="Boss")]
     Boss,
-    Employee
+    [Display(Name = "Employee")] 
+    Employee,
 }

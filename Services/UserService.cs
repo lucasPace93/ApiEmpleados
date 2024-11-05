@@ -27,7 +27,6 @@ public class UserService : IUserService
         //if (UsuarioActual != null) return context.UserDb;
         return context.UserDb;
     }
-
     /*public async Task GetUser(Guid id)
     {
         var GetUsuario = context.UserDb.Find(id);

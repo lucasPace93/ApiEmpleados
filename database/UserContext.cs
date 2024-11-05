@@ -1,5 +1,6 @@
 
 
+using System.ComponentModel.DataAnnotations;
 using EmployedProyect.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,10 +18,10 @@ public class UserContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         List<User> UserInit = new List<User>();
-        UserInit.Add(new User("Lucas", "Pace",new Guid(), Category.Employee));
-        UserInit.Add(new User("Flor", "Escalante",new Guid(), Category.Employee));
-        UserInit.Add(new User("Lucifer", "Pace", new Guid(), Category.Employee));
-        UserInit.Add(new User("Hector", "Pace", new Guid(), Category.Employee));
+        UserInit.Add(new User("Lucas", "Pace",Guid.NewGuid(), Category.Employee));
+        UserInit.Add(new User("Flor", "Escalante",Guid.NewGuid(), Category.Employee));
+        UserInit.Add(new User("Lucifer", "Pace", Guid.NewGuid(), Category.Employee));
+        UserInit.Add(new User("Hector", "Pace", Guid.NewGuid(), Category.Employee));
 
         modelBuilder.Entity<User>(user =>
         {

@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using EmployedProyect.database;
 using EmployedProyect.Models;
 using EmployedProyect.Services;
@@ -19,60 +21,60 @@ public class UserController : ControllerBase
     User usuario;
     private List<User> ListaUsuario = new List<User>()
     {
-        new("Lucas", "Pace", new Guid() , Category.Employee),
-        new("Florencia","Escalante",new Guid(),Category.Employee),
-        new("Lucifer","Pace",new Guid(),Category.Boss),
-        new("Hector","Pace",new Guid(),Category.Employee)
+        new("Lucas", "Pace", Guid.NewGuid() , Category.Employee),
+        new("Florencia","Escalante",Guid.NewGuid(),Category.Employee),
+        new("Lucifer","Pace",Guid.NewGuid(),Category.Boss),
+        new("Hector","Pace", Guid.NewGuid(), Category.Employee) //Category.Employee)
     };
-    //ListaEmpleado.Add("Lucas", "Pace", Category.Employee);Quotas quotas = new Quotas();Quotas quotas = new Quotas();
+//ListaEmpleado.Add("Lucas", "Pace", Category.Employee);Quotas quotas = new Quotas();Quotas quotas = new Quotas();
 
-    public UserController(ILogger<UserController> logger, IUserService service, UserContext db)
-    {
-        _logger = logger;
-        userService = service;
-        dbContext = db;
-    }
+public UserController(ILogger<UserController> logger, IUserService service, UserContext db)
+{
+    _logger = logger;
+    userService = service;
+    dbContext = db;
+}
 
-    [HttpGet]
-    [Route("create DB")]
-    public IActionResult CreateDatabase()
-    {
-        dbContext.Database.EnsureCreated();
-        return Ok("db successfully created");
-    }
-    [HttpGet(Name = "Lista de empleados")]
-    [Route("/Employee")]
-    public IActionResult Get()
-    {
-        userService.Get();
-        _logger.LogInformation("Mostrando lista de empleados");
-        return Ok(User);
-    }
+[HttpGet]
+[Route("create DB")]
+public IActionResult CreateDatabase()
+{
+    dbContext.Database.EnsureCreated();
+    return Ok("db successfully created");
+}
+[HttpGet(Name = "Lista de empleados")]
+[Route("/Employee")]
+public IActionResult Get()
+{
+    userService.Get();
+    _logger.LogInformation("Mostrando lista de empleados");
+    return Ok(ListaUsuario);
+}
 
-    [HttpGet(Name = "Un Empleado")]
-    [Route("/Employee/{Id}")]
-    public IActionResult GetUserById(Guid Id)
-    {
-        var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
-        if (Employee == null) return NotFound("Empleado no encontrado");
-        _logger.LogInformation("Mostrando usuario solicitado");
-        return Ok(Employee);
-    }
+[HttpGet(Name = "Un Empleado")]
+[Route("/Employee/{Id}")]
+public IActionResult GetUserById(Guid Id)
+{
+    var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
+    if (Employee == null) return NotFound("Empleado no encontrado");
+    _logger.LogInformation("Mostrando usuario solicitado");
+    return Ok(Employee);
+}
 
-    [HttpPost]
-    [Route("/Employees")]
-    public IActionResult Post([FromBody] User usuario)
-    {
-        userService.Save(usuario);
-        _logger.LogInformation("usuario creado");
-        return Created();
-    }
+[HttpPost]
+[Route("/Employees")]
+public IActionResult Post([FromBody] User usuario)
+{
+    userService.Save(usuario);
+    _logger.LogInformation("usuario creado");
+    return Created();
+}
 
-    [HttpDelete("{UserId}")]
-    [Route("Employee/{UserId}")]
-    public IActionResult Delete([FromBody] Guid UserId)
-    {
-        userService.Delete(UserId);
-        return Ok("usuario eliminado");
-    }
+[HttpDelete("{UserId}")]
+[Route("Employee/{UserId}")]
+public IActionResult Delete([FromBody] Guid UserId)
+{
+    userService.Delete(UserId);
+    return Ok("usuario eliminado");
+}
 }
