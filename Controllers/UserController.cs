@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 namespace EmployedProyect.Controllers;
 
 [ApiController]
-[Route("/Employee")]
+//[Route("/Employee")]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
