@@ -10,55 +10,35 @@ using Microsoft.EntityFrameworkCore;
 namespace EmployedProyect.Controllers;
 
 [ApiController]
-//[Route("/Employee")]
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {
     private readonly ILogger<UserController> _logger;
     IUserService userService;
-    UserContext dbContext;
-
-    User usuario;
-    private List<User> ListaUsuario = new List<User>()
-    {
-        new("Lucas", "Pace", Guid.NewGuid() , Category.Employee),
-        new("Florencia","Escalante",Guid.NewGuid(),Category.Employee),
-        new("Lucifer","Pace",Guid.NewGuid(),Category.Boss),
-        new("Hector","Pace", Guid.NewGuid(), Category.Employee) //Category.Employee)
-    };
-//ListaEmpleado.Add("Lucas", "Pace", Category.Employee);Quotas quotas = new Quotas();Quotas quotas = new Quotas();
-
+    public UserController userController {get; set;}
+    
 public UserController(ILogger<UserController> logger, IUserService service, UserContext db)
 {
     _logger = logger;
     userService = service;
-    dbContext = db;
 }
 
-[HttpGet]
-[Route("create DB")]
-public IActionResult CreateDatabase()
-{
-    dbContext.Database.EnsureCreated();
-    return Ok("db successfully created");
-}
-[HttpGet(Name = "Lista de empleados")]
-[Route("/Employee")]
+[HttpGet("/{id}")][Route("/Employee")]
 public IActionResult Get()
 {
     userService.Get();
     _logger.LogInformation("Mostrando lista de empleados");
-    return Ok(ListaUsuario);
+    return Ok(/*ListaUsuario*/);
 }
 
-[HttpGet(Name = "Un Empleado")]
-[Route("/Employee/{Id}")]
-public IActionResult GetUserById(Guid Id)
+[HttpGet][Route("/Employee/{Id}")]
+public IActionResult GetUserById(Guid Id)   //esta logica deberia estar en UserService
 {
-    var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
-    if (Employee == null) return NotFound("Empleado no encontrado");
+    userService.GetUserById(Id);
+    //var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
+    //if (Employee == null) return NotFound("Empleado no encontrado");
     _logger.LogInformation("Mostrando usuario solicitado");
-    return Ok(Employee);
+    return Ok();
 }
 
 [HttpPost]
@@ -77,4 +57,5 @@ public IActionResult Delete([FromBody] Guid UserId)
     userService.Delete(UserId);
     return Ok("usuario eliminado");
 }
+
 }

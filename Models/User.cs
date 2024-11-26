@@ -1,17 +1,9 @@
-using Microsoft.AspNetCore.Authorization.Infrastructure;
-using EmployedProyect.Controllers;
-using System.Collections.Generic;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
-
 
 namespace EmployedProyect.Models;
 
-
 public class User
 {
-    //public User(){}
     public User(string name, string surname, Guid id, Category category) //constructor para HttpGet
     {
         this.Name = name;

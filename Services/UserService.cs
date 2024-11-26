@@ -7,9 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace EmployedProyect.Services;
-
 public class UserService : IUserService
 {
     UserContext context;
@@ -19,13 +19,14 @@ public class UserService : IUserService
     }
     public IEnumerable<User> Get()
     {
-        return context.UserDb;
+        return context.Users.AsNoTracking().ToList();
     }
     public IEnumerable<User> GetUserById(Guid id)
     {
-        var UsuarioActual = context.UserDb.Find(id);
+        
+        var UsuarioActual = context.Users.Find(id);
         //if (UsuarioActual != null) return context.UserDb;
-        return context.UserDb;
+        return context.Users;
     }
     /*public async Task GetUser(Guid id)
     {
@@ -41,12 +42,12 @@ public class UserService : IUserService
     }*/
     public async Task Save(User usuario)
     {
-        var NewUser = context.UserDb.Add(usuario);
+        var NewUser = context.Users.AddAsync(usuario);
         await context.SaveChangesAsync();
     }
     public async Task Update(Guid id, User usuario)
     {
-        var UsuarioActual = context.UserDb.Find(id);
+        var UsuarioActual = context.Users.Find(id);
 
         if (UsuarioActual != null)
         {
@@ -59,7 +60,7 @@ public class UserService : IUserService
     }
     public async Task Delete(Guid id)
     {
-        var UsuarioActual = context.UserDb.Find(id);
+        var UsuarioActual = context.Users.Find(id);
         if (UsuarioActual != null)
         {
             context.Remove(UsuarioActual);

@@ -1,6 +1,3 @@
-
-
-using System.ComponentModel.DataAnnotations;
 using EmployedProyect.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +6,7 @@ namespace EmployedProyect.database;
 public class UserContext : DbContext
 {
     #region tabla en db
-    public DbSet<User> UserDb { get; set; }
+    public DbSet<User> Users { get; set; }
     public UserContext(DbContextOptions<UserContext> options) : base(options) { }
     #endregion
 
@@ -17,6 +14,7 @@ public class UserContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        //Datos semilla
         List<User> UserInit = new List<User>();
         UserInit.Add(new User("Lucas", "Pace",Guid.NewGuid(), Category.Employee));
         UserInit.Add(new User("Flor", "Escalante",Guid.NewGuid(), Category.Employee));
