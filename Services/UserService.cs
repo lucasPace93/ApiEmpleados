@@ -23,23 +23,16 @@ public class UserService : IUserService
     }
     public IEnumerable<User> GetUserById(Guid id)
     {
-        
-        var UsuarioActual = context.Users.Find(id);
-        //if (UsuarioActual != null) return context.UserDb;
-        return context.Users;
-    }
-    /*public async Task GetUser(Guid id)
-    {
-        var GetUsuario = context.UserDb.Find(id);
-        if (GetUsuario != null)
+
+        var UsuarioActual = context.Users.FirstOrDefault(e => (e.UserId == id));
+        if (UsuarioActual != null)
         {
-            GetUsuario.Name = usuario.Name;
-            GetUsuario.Surname = usuario.Surname;
-            GetUsuario.UserId = usuario.UserId;
-            GetUsuario.UserCategory = usuario.UserCategory;
+            context.SaveChangesAsync();
+            return context.Users.Where(e => e.UserId == id).ToList();
         }
-        await context.SaveChangesAsync();
-    }*/
+        else return null;  //el HTTP NOT FOUND va en el controller pero como lo armo aca? 
+    }
+
     public async Task Save(User usuario)
     {
         var NewUser = context.Users.AddAsync(usuario);

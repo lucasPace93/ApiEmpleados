@@ -27,7 +27,9 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
-//app.Use[...]Middleware();
+
+//MIDDLEWARES :
+app.UseUserInitializer();
 
 
 app.MapGet ( "/GetUser", () => "Hello World"); //modificar

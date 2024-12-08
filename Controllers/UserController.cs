@@ -35,8 +35,6 @@ public IActionResult Get()
 public IActionResult GetUserById(Guid Id)   //esta logica deberia estar en UserService
 {
     userService.GetUserById(Id);
-    //var Employee = ListaUsuario.FirstOrDefault(e => (e.UserId == Id));
-    //if (Employee == null) return NotFound("Empleado no encontrado");
     _logger.LogInformation("Mostrando usuario solicitado");
     return Ok();
 }
