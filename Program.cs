@@ -36,11 +36,10 @@ app.MapGet ( "/GetUser", () => "Hello World"); //modificar
 
 
 
-/*app.MapGet("/dbconexion", ([FromServices] UserContext dbContext)) =>
+app.MapGet("/dbconexion", ([FromServices] UserService Services) =>
 {
-    dbContext.Database.EnsureCreated();
-    return Results.Ok("Base de datos ")
-}*/
+    return Results.Ok("Base de datos");
+});
 
 //app.MapControllers();
 app.Run();
