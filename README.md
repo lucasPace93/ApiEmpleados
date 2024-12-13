@@ -17,9 +17,6 @@ Sucursal: "Principal" (tiene que validar que el nombre de la sucursal exista, en
 Cuando la api recibe eso, retorna un mensaje de tipo 200 (elijo cual)
 
 
-
-
-
 Tiene que disponibilizar los siguientes endpoints:
 
 Post: .../Employees (guarda un empleado, con campos validos sino retorna un 400 Bad Request)
@@ -29,6 +26,3 @@ Delete: ../Employees (elimina un empleado)
 Get:.../employees/:identifier (retorna un empleado por identificador)
 
 Get;.../Employees (retorna todos los empleados)
-
-
-
