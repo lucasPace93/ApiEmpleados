@@ -9,7 +9,6 @@ public class User
         this.Surname = surname;
         this.UserId = id;
         TypeCategory(this.UserCategory = category);
-        this.branch = branch;
     }
     public User(string name, string surname, Category category, BranchName branch) //constructor para HttpPost para que genere el Guid unico por usuario 
     {
@@ -17,13 +16,13 @@ public class User
         this.Surname = surname;
         TypeCategory(this.UserCategory = category);
         this.UserId = Guid.NewGuid();
-        this.branch = branch;
     }
-    public Guid UserId = new Guid();
+    public Guid UserId = new Guid(); //este new Guid() me generaría un nuevo ID cada vez que el programa se ejecute? o el de los datos semilla lo haria? 
+    public Guid BranchId { get; set; }
     public string Name { get; set; }
     public string Surname { get; set; }
     public Category UserCategory { get; set; }
-    public BranchName branch { get; set; }
+    public virtual Branches VBranch { get; set; }
     public static string TypeCategory(Category category)
     {
         return category.ToString();

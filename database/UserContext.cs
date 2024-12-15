@@ -7,6 +7,7 @@ public class UserContext : DbContext
 {
     #region tabla en db
     public DbSet<User> Users { get; set; }
+    public DbSet<Branches> Branches { get; set; }
     public UserContext(DbContextOptions<UserContext> options) : base(options) { }
     #endregion
 
@@ -16,19 +17,34 @@ public class UserContext : DbContext
     {
         //Datos semilla
         List<User> UserInit = new List<User>();
-        UserInit.Add(new User("Lucas", "Pace",Guid.NewGuid(), Category.Employee));
-        UserInit.Add(new User("Flor", "Escalante",Guid.NewGuid(), Category.Employee));
-        UserInit.Add(new User("Lucifer", "Pace", Guid.NewGuid(), Category.Employee));
-        UserInit.Add(new User("Hector", "Pace", Guid.NewGuid(), Category.Employee));
+        UserInit.Add(new User("Lucas", "Pace", Guid.NewGuid(), Category.Employee, BranchName.Central));
+        UserInit.Add(new User("Flor", "Escalante", Guid.NewGuid(), Category.Employee, BranchName.Central));
+        UserInit.Add(new User("Lucifer", "Pace", Guid.NewGuid(), Category.Employee, BranchName.Central));
+        UserInit.Add(new User("Hector", "Pace", Guid.NewGuid(), Category.Employee, BranchName.Sucursal2));
+
+        List<Branches> BranchesInit = new List<Branches>();
+        BranchesInit.Add(new Branches(BranchName.Central, Guid.NewGuid()));
+        BranchesInit.Add(new Branches(BranchName.Sucursal2, Guid.NewGuid()));
+        BranchesInit.Add(new Branches(BranchName.Sucursal3, Guid.NewGuid()));
 
         modelBuilder.Entity<User>(user =>
         {
             user.HasData(UserInit);
             user.ToTable("Usuario");
-            user.HasKey(p=> p.UserId);
-            user.Property(p=> p.Name).IsRequired();
-            user.Property(p=> p.Surname).IsRequired();
-            user.Property(p =>p.UserCategory).IsRequired();
+            user.HasKey(p => p.UserId);
+            user.Property(p => p.Name).IsRequired();
+            user.Property(p => p.Surname).IsRequired();
+            user.Property(p => p.UserCategory).IsRequired();
+            user.HasOne(p=>p.VBranch).WithMany(p => p.UsersList).HasForeignKey(p=>p.BranchId);
+        });
+
+        modelBuilder.Entity<Branches>(branch =>
+        {
+            branch.HasData(BranchesInit);
+            branch.ToTable("Sucursales");
+            branch.HasKey(p => p.BranchId);
+            branch.HasMany(p => p.UsersList).WithOne(p => p.VBranch).HasForeignKey(p=>p.UserId);
+
         });
     }
     #endregion
