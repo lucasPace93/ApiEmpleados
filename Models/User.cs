@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace EmployedProyect.Models;
 public class User
 {
-    public User(string name, string surname, Guid id, Category category, Branch branch) //constructor para HttpGet
+    public User(string name, string surname, Guid id, Category category, BranchName branch) //constructor para HttpGet
     {
         this.Name = name;
         this.Surname = surname;
@@ -11,7 +11,7 @@ public class User
         TypeCategory(this.UserCategory = category);
         this.branch = branch;
     }
-    public User(string name, string surname, Category category, Branch branch) //constructor para HttpPost para que genere el Guid unico por usuario 
+    public User(string name, string surname, Category category, BranchName branch) //constructor para HttpPost para que genere el Guid unico por usuario 
     {
         this.Name = name;
         this.Surname = surname;
@@ -23,7 +23,7 @@ public class User
     public string Name { get; set; }
     public string Surname { get; set; }
     public Category UserCategory { get; set; }
-    public Branch branch { get; set; }
+    public BranchName branch { get; set; }
     public static string TypeCategory(Category category)
     {
         return category.ToString();

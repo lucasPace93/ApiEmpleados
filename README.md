@@ -26,3 +26,10 @@ Delete: ../Employees (elimina un empleado)
 Get:.../employees/:identifier (retorna un empleado por identificador)
 
 Get;.../Employees (retorna todos los empleados)
+
+
+
+AGREGAR CREACION DE DB PARA CLASE BRANCH
+AGREGAR REQUEST PARA CLASE BRANCH
+AGREGAR METODOS HTTP PARA CLASE BRANCH
+AGREGAR VALIDACION DE EN LOS METODOS HTTP DE LA CLASE BRANCH PARA NOMBRE DE SUCURSALES 
