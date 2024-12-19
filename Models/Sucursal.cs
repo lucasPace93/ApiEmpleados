@@ -1,15 +1,15 @@
 
 namespace EmployedProyect.Models;
 
-public class Branches
+public class Sucursal
 {
-    public Branches(BranchName branch, Guid id)
+    public Sucursal(BranchName branch, Guid id)
     {
         BranchId = id;
         this.Branch = branch;
     }
 
-    public Branches(BranchName branch)
+    public Sucursal(BranchName branch)
     {
         BranchId = Guid.NewGuid();
         this.Branch = branch;

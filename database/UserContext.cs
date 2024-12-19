@@ -1,13 +1,12 @@
 using EmployedProyect.Models;
 using Microsoft.EntityFrameworkCore;
-
 namespace EmployedProyect.database;
 
 public class UserContext : DbContext
 {
     #region tabla en db
     public DbSet<User> Users { get; set; }
-    public DbSet<Branches> Branches { get; set; }
+    public DbSet<Sucursal> Branches { get; set; }
     public UserContext(DbContextOptions<UserContext> options) : base(options) { }
     #endregion
 
@@ -22,10 +21,10 @@ public class UserContext : DbContext
         UserInit.Add(new User("Lucifer", "Pace", Guid.NewGuid(), Category.Employee, BranchName.Central));
         UserInit.Add(new User("Hector", "Pace", Guid.NewGuid(), Category.Employee, BranchName.Sucursal2));
 
-        List<Branches> BranchesInit = new List<Branches>();
-        BranchesInit.Add(new Branches(BranchName.Central, Guid.NewGuid()));
-        BranchesInit.Add(new Branches(BranchName.Sucursal2, Guid.NewGuid()));
-        BranchesInit.Add(new Branches(BranchName.Sucursal3, Guid.NewGuid()));
+        List<Sucursal> BranchesInit = new List<Sucursal>();
+        BranchesInit.Add(new Sucursal(BranchName.Central, Guid.NewGuid()));
+        BranchesInit.Add(new Sucursal(BranchName.Sucursal2, Guid.NewGuid()));
+        BranchesInit.Add(new Sucursal(BranchName.Sucursal3, Guid.NewGuid()));
 
         modelBuilder.Entity<User>(user =>
         {
@@ -38,7 +37,7 @@ public class UserContext : DbContext
             user.HasOne(p=>p.VBranch).WithMany(p => p.UsersList).HasForeignKey(p=>p.BranchId);
         });
 
-        modelBuilder.Entity<Branches>(branch =>
+        modelBuilder.Entity<Sucursal>(branch =>
         {
             branch.HasData(BranchesInit);
             branch.ToTable("Sucursales");

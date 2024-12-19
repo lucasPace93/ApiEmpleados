@@ -22,7 +22,7 @@ public class User
     public string Name { get; set; }
     public string Surname { get; set; }
     public Category UserCategory { get; set; }
-    public virtual Branches VBranch { get; set; }
+    public virtual Sucursal VBranch { get; set; }
     public static string TypeCategory(Category category)
     {
         return category.ToString();
